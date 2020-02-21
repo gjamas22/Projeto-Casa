@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="utf-8" />
+<title>Histórico</title>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script src="https://kit.fontawesome.com/a87a4abdd2.js"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<header class="menu-principal">
+		<main>
+			<div class="header-1">
+				<div class="logo">
+					<img class="logo2" src="/images/grande_deitado.png" />
+					<div class="redes-sociais"></div>
+				</div>
+			</div>
+		</main>
+	</header>
+	<main>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="/home">Casa de Show</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active"><a class="nav-link" href="/home">Home
+							<span class="sr-only">(current)</span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link" href="/casadeshow">Casas
+							de Show</a></li>
+					<li class="nav-item"><a class="nav-link" href="/eventos">Eventos</a></li>
+					<li class="nav-item"><a class="nav-link" href="/historico">Histórico</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</main>
+	<div class="row ">
+
+
+		<div class="col-sm-4" th:each="item : ${todoscompra}">
+			<div class="card css">
+				<div class="card-body">
+					<h5 class="card-title">Dados de compras realizadas</h5>
+					<p class="card-text">
+						Preço Total: <span th:text="|R$ ${{item.valorTotal}}|"></span> <br>Data
+						da compra: <span th:text="${{item.dataCompra}}"></span><br>Forma
+						de Pagamento: <span th:text="${item.formaPagamento}"></span>
+
+					</p>
+
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<script src="/js/jquery-3.4.1.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+</body>
+</html>

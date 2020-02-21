@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta charset="utf-8" />
+<title>Eventos</title>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" href="fontawesome-free-5.12.0-web/css/all.css" />
+</head>
+<body>
+	<header class="menu-principal">
+		<main>
+			<div class="header-1">
+				<div class="logo">
+					<img class="logo2" src="/images/grande_deitado.png" />
+					<div class="redes-sociais"></div>
+				</div>
+			</div>
+		</main>
+	</header>
+	<main>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="/home">Casa de Show</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active"><a class="nav-link" href="/home">Home
+							<span class="sr-only">(current)</span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link" href="/casadeshow">Casas
+							de Show</a></li>
+					<li class="nav-item"><a class="nav-link" href="/eventos">Eventos</a></li>
+					<li class="nav-item"><a class="nav-link" href="/historico">Histórico</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</main>
+	<form class="card" method="POST" action="#" th:action="@{/eventos}"
+		enctype="multipart/form-data" th:object="${eventos}">
+		<div class="alert alert-success"
+			th:if="${!#strings.isEmpty(mensagem)}" th:text="${mensagem}"></div>
+
+		<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+			<div th:each="detailedError: ${#fields.detailedErrors()}">
+				<span th:text="${detailedError.message}"></span>
+			</div>
+		</div>
+		<div class="card-header">
+			<input type="hidden" th:field="*{id}" />
+			<h1 class="card-title text-center">Eventos</h1>
+		</div>
+		<div class="card-body">
+			<div class="form-group">
+				<label for="nomeCasa" class="col-sm-2-label">Eventos</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="nomeEvento"
+						th:field="*{nomeEvento}"
+						th:classappend="${#fields.hasErrors('nomeEvento')} ? is-invalid" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="endereco" class="col-sm-2-label">Capacidade</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="capacidade"
+						th:field="*{capacidade}"
+						th:classappend="${#fields.hasErrors('capacidade')} ? is-invalid" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="endereco" class="col-sm-2-label">Data</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="dataEvento"
+						th:field="*{dataEvento}"
+						th:classappend="${#fields.hasErrors('dataEvento')} ? is-invalid" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="endereco" class="col-sm-2-label">Valor do
+					ingresso</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="valor"
+						th:field="*{valor}"
+						th:classappend="${#fields.hasErrors('valor')} ? is-invalid" />
+				</div>
+			</div>
+
+			<div class="form-group col-md-4">
+				<label for="inputState">Casa de Show</label><select id="inputState"
+					class="form-control" th:field="*{casadeShow1}">
+					<option th:each="casadeSho : ${casadeShow}"
+						th:value="${casadeSho.id}" th:text="${casadeSho.nomeCasa}"></option>
+				</select>
+			</div>
+
+			<div class="form-group col-md-4">
+				<label for="inputState">Gênero</label><select id="inputState"
+					class="form-control" name="status">
+					<option th:each="status : ${statusGeneroList}" th:value="${status}"
+						th:text="${status.descricao}"></option>
+				</select>
+			</div>
+			<div class="form-group col-md-12">
+				<input type="file" name="arquivo" accept="image/png, image/jpeg" />
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary">Salvar</button>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="panel-body">
+		<table class="table table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Nome</th>
+					<th scope="col">Capacidade</th>
+					<th scope="col">Data</th>
+					<th scope="col">Preço dos Ingressos</th>
+					<th scope="col">Casa de Show</th>
+					<th scope="col">#</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="eventos : ${todoseventos}">
+					<td scope="col" th:text="${eventos.id}"></td>
+					<td scope="col" th:text="${eventos.nomeEvento}"></td>
+					<td scope="col" th:text="${eventos.capacidade}"></td>
+					<td scope="col" th:text="${{eventos.dataEvento}}"></td>
+					<td scope="col" th:text="|R$ ${{eventos.valor}}|"></td>
+					<td scope="col" th:text="${eventos.casadeShow1.nomeCasa}"></td>
+
+					<td><a class="btn btn-primary"
+						th:href="@{eventos/editar/{id}(id=${eventos.id})}" role="button">Editar</a>
+						<a class="btn btn-danger"
+						th:href="@{eventos/excluir/{id}(id=${eventos.id})}" role="button">Excluir</a></td>
+				<tr>
+					<td colspan="7" th:if="${#lists.isEmpty(todoseventos)}">Nenhum
+						evento cadastrado!</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div layout:include="ModalExclusao"></div>
+
+
+	<script src="/js/jquery-3.4.1.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script type="js/modal.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+</body>
+</html>

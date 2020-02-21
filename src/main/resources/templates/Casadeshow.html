@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="utf-8" />
+<title>Casa de Show</title>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" href="fontawesome-free-5.12.0-web/css/all.css" />
+</head>
+<body>
+	<header class="menu-principal">
+		<main>
+			<div class="header-1">
+				<div class="logo">
+					<img class="logo2" src="/images/grande_deitado.png" />
+					<div class="redes-sociais"></div>
+				</div>
+			</div>
+		</main>
+	</header>
+	<main>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="/home">Casa de Show</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active"><a class="nav-link" href="/home">Home
+							<span class="sr-only">(current)</span>
+					</a></li>
+					<li class="nav-item"><a class="nav-link" href="/casadeshow">Casas
+							de Show</a></li>
+					<li class="nav-item"><a class="nav-link" href="/eventos">Eventos</a></li>
+					<li class="nav-item"><a class="nav-link" href="/historico">Histórico</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</main>
+	<form class="card" method="POST" action="#" th:action="@{/casadeshow}"
+		th:object="${cadastrarCasadeShow}">
+		<div class="alert alert-success"
+			th:if="${!#strings.isEmpty(mensagem)}" th:text="${mensagem}"></div>
+
+		<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+			<div th:each="detailedError: ${#fields.detailedErrors()}">
+				<span th:text="${detailedError.message}"></span>
+			</div>
+		</div>
+		<div class="card-header">
+			<input type="hidden" th:field="*{id}" />
+			<h1 class="card-title text-center">Casa de Show</h1>
+		</div>
+		<div class="card-body">
+			<div class="form-group">
+				<label for="nomeCasa" class="col-sm-2-label">Casa de Show</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="nomeCasa"
+						th:field="*{nomeCasa}"
+						th:classappend="${#fields.hasErrors('nomeCasa')} ? is-invalid" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="endereco" class="col-sm-2-label">Endereço</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="endereco"
+						th:field="*{endereco}"
+						th:classappend="${#fields.hasErrors('endereco')} ? is-invalid" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary">Salvar</button>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="panel-body">
+		<table class="table table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Nome</th>
+					<th scope="col">Endereço</th>
+					<th scope="col" class="botao">#</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="cadastrarCasadeShow : ${cadastrarCasadeShowRepository}">
+					<td scope="col" th:text="${cadastrarCasadeShow.id}"></td>
+					<td scope="col" th:text="${cadastrarCasadeShow.nomeCasa}"></td>
+					<td scope="col" th:text="${cadastrarCasadeShow.endereco}"></td>
+
+					<td><a class="btn btn-primary"
+						th:href="@{/casadeshow/editar/{id}(id=${cadastrarCasadeShow.id})}"
+						role="button">Editar</a> <a class="btn btn-danger"
+						th:href="@{/casadeshow/excluir/{id}(id=${cadastrarCasadeShow.id})}"
+						role="button">Excluir</a></td>
+				</tr>
+
+				<tr>
+					<td colspan="4"
+						th:if="${#lists.isEmpty(cadastrarCasadeShowRepository)}">Nenhuma
+						casa de show cadastrada!</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div></div>
+	<script src="/js/jquery-3.4.1.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script type="js/modal.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+</body>
+</html>
