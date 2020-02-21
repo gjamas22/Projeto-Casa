@@ -24,7 +24,7 @@ import com.gft.Casadeshow.repository.EventosRepository;
 public class HomeController {
 
 	//Para funcionar com a imagem aparecendo , trocar as 4 letras dentro de users.
-	private static String caminhoImagens = "/Users/GIJF/Documents/";
+	private static String caminhoImagens = "/Users/HEMA/Documents/";
 	
 	@Autowired
 	private EventosRepository eventosRepository;

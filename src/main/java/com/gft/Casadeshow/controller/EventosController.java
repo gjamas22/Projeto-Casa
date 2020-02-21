@@ -32,7 +32,7 @@ public class EventosController {
 	private static final String EVENTO_VIEW = "Eventos";
 	
 	//Para funcionar com a imagem aparecendo , trocar as 4 letras dentro de users.
-	private static String caminhoImagens = "/Users/GIJF/Documents/";
+	private static String caminhoImagens = "/Users/HEMA/Documents/";
 	
 	@Autowired
 	private EventosRepository eventosRepository;
